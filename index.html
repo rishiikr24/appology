@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Love ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }    
+        body {        
+            font-family: 'Arial', sans-serif;        
+            overflow: hidden;        
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);        
+            height: 100vh;        
+            position: relative;    
+        }    
+        /* 3D Scene Container */    
+        #scene {        
+            position: fixed;        
+            top: 0;        
+            left: 0;        
+            width: 100%;        
+            height: 100%;        
+            perspective: 1000px;        
+            transform-style: preserve-3d;    
+        }    
+        /* Floating particles */    
+        .particle {        
+            position: absolute;        
+            background: rgba(255, 255, 255, 0.8);        
+            border-radius: 50%;        
+            pointer-events: none;        
+            animation: float 6s infinite linear;    
+        }    
+        @keyframes float {        
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }        
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }    
+        }    
+        /* Page 1 - Are you angry? */    
+        .page1 {        
+            position: absolute;        
+            top: 0;        
+            left: 0;        
+            width: 100%;        
+            height: 100%;        
+            display: flex;        
+            flex-direction: column;        
+            justify-content: center;        
+            align-items: center;        
+            text-align: center;        
+            transform-style: preserve-3d;        
+            transition: transform 1s ease;    
+        }    
+        .page1.hidden {        
+            transform: translateZ(-1000px) rotateY(90deg);        
+            opacity: 0;    
+        }    
+        .title {        
+            font-size: 3.5rem;        
+            color: #fff;        
+            text-shadow: 0 10px 20px rgba(0,0,0,0.3);        
+            margin-bottom: 2rem;        
+            transform: translateZ(100px);        
+            animation: glow 2s ease-in-out infinite alternate;    
+        }    
+        @keyframes glow {        
+            from { text-shadow: 0 10px 20px rgba(0,0,0,0.3), 0 0 20px #ff69b4; }        
+            to { text-shadow: 0 10px 20px rgba(0,0,0,0.5), 0 0 30px #ff1493; }    
+        }    
+        .question {        
+            font-size: 2rem;        
+            color: #fff;        
+            margin-bottom: 4rem;        
+            transform: translateZ(50px);        
+            text-shadow: 0 5px 10px rgba(0,0,0,0.3);    
+        }    
+        .buttons {        
+            display: flex;        
+            gap: 3rem;        
+            transform: translateZ(80px);    
+        }    
+        .btn {        
+            padding: 20px 40px;        
+            font-size: 1.5rem;        
+            border: none;        
+            border-radius: 50px;        
+            cursor: pointer;        
+            transition: all 0.3s ease;        
+            font-weight: bold;        
+            transform-style: preserve-3d;        
+            position: relative;        
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);    
+        }    
+        .btn-no {        
+            background: linear-gradient(45deg, #ff6b9d, #ff8fab);        
+            color: white;    
+        }    
+        .btn-yes {        
+            background: linear-gradient(45deg, #ff4757, #ff6b7a);        
+            color: white;        
+            transition: all 0.1s ease;    
+        }    
+        .btn-yes:hover {        
+            transform: translateX(100px) translateZ(50px) rotateY(180deg) scale(1.2);    
+        }    
+        .btn-no:hover {        
+            transform: translateZ(30px) scale(1.1);        
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);    
+        }    
+        /* Page 2 - MUUAAAAAHHHH */    
+        .page2 {        
+            position: absolute;        
+            top: 0;        
+            left: 0;        
+            width: 100%;        
+            height: 100%;        
+            display: flex;        
+            flex-direction: column;        
+            justify-content: center;        
+            align-items: center;        
+            text-align: center;        
+            opacity: 0;        
+            transform: translateZ(-1000px) rotateY(-90deg);        
+            transition: all 1s ease;    
+        }    
+        .page2.active {        
+            opacity: 1;        
+            transform: translateZ(0) rotateY(0deg);    
+        }    
+        .thankyou-section {        
+            display: flex;        
+            flex-direction: column;        
+            align-items: center;        
+            margin-bottom: 2rem;    
+        }    
+        .thankyou {        
+            font-size: 3rem;        
+            color: #fff;        
+            text-shadow: 0 10px 20px rgba(0,0,0,0.3);        
+            margin-bottom: 1rem;        
+            transform: translateZ(100px);        
+            animation: bounce 2s infinite;    
+        }    
+        .muah-text {        
+            font-size: 2.2rem;        
+            color: #ff1493;        
+            text-shadow: 0 8px 20px rgba(255, 20, 147, 0.6);        
+            font-weight: bold;        
+            transform: translateZ(120px);        
+            animation: kissPulse 1.5s ease-in-out infinite;        
+            margin-bottom: 2rem;        
+            text-align: center;        
+            line-height: 1.2;    
+        }    
+        .page2-buttons {        
+            display: flex;        
+            gap: 3rem;        
+            transform: translateZ(80px);        
+            margin-bottom: 2rem;    
+        }    
+        .btn-page2-no {        
+            background: linear-gradient(45deg, #ff4757, #ff6b7a);        
+            color: white;        
+            transition: all 0.1s ease;    
+        }    
+        .btn-page2-no:hover {        
+            transform: translateX(100px) translateZ(50px) rotateY(180deg) scale(1.2);    
+        }    
+        .btn-page2-yes {        
+            background: linear-gradient(45deg, #ff9a8b, #ff6b9d);        
+            color: white;    
+        }    
+        .btn-page2-yes:hover {        
+            transform: translateZ(30px) scale(1.1);        
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);    
+        }    
+        .come-message {        
+            font-size: 2rem;        
+            color: #fff;        
+            margin-bottom: 3rem;        
+            transform: translateZ(50px);        
+            opacity: 0;        
+            animation: fadeIn 1s ease 2.5s forwards;    
+        }    
+        .btn-go {        
+            background: linear-gradient(45deg, #ff9a8b, #ff6b9d);        
+            color: white;        
+            opacity: 0;        
+            animation: fadeIn 1s ease 3.5s forwards;        
+            transform: translateZ(80px);    
+        }    
+        /* Page 3 - Movie Date */    
+        .page3 {        
+            position: absolute;        
+            top: 0;        
+            left: 0;        
+            width: 100%;        
+            height: 100%;        
+            display: flex;        
+            flex-direction: column;        
+            justify-content: center;        
+            align-items: center;        
+            text-align: center;        
+            opacity: 0;        
+            transform: translateZ(-2000px) rotateY(-180deg);        
+            transition: all 1s ease;    
+        }    
+        .page3.active {        
+            opacity: 1;        
+            transform: translateZ(0) rotateY(0deg);    
+        }    
+        .movie-title {        
+            font-size: 2.8rem;        
+            color: #fff;        
+            margin-bottom: 4rem;        
+            transform: translateZ(100px);        
+            text-shadow: 0 10px 20px rgba(0,0,0,0.3);        
+            line-height: 1.3;    
+        }    
+        .btn-movie-yes {        
+            background: linear-gradient(45deg, #a8e6cf, #88d8a3);        
+            color: #2d5016;        
+            font-size: 1.8rem;        
+            padding: 25px 50px;    
+        }    
+        .btn-movie-yes:hover {        
+            transform: translateZ(50px) scale(1.1);        
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);    
+        }    
+        /* Page 4 - 50 Languages I Love You */    
+        .page4 {        
+            position: absolute;        
+            top: 0;        
+            left: 0;        
+            width: 100%;        
+            height: 100%;        
+            display: flex;        
+            flex-direction: column;        
+            justify-content: center;        
+            align-items: center;        
+            text-align: center;        
+            opacity: 0;        
+            transform: translateZ(-3000px) rotateY(-270deg);        
+            transition: all 1.5s ease;        
+            overflow-y: auto;        
+            padding: 2rem;    
+        }    
+        .page4.active {        
+            opacity: 1;        
+            transform: translateZ(0) rotateY(0deg);    
+        }    
+        .love-title {        
+            font-size: 4rem;        
+            color: #fff;        
+            text-shadow: 0 15px 30px rgba(0,0,0,0.4);        
+            margin-bottom: 2rem;        
+            transform: translateZ(150px);        
+            animation: heartbeat 1.5s ease-in-out infinite;        
+            background: linear-gradient(45deg, #ff1493, #ff69b4, #ff1493);        
+            -webkit-background-clip: text;        
+            -webkit-text-fill-color: transparent;        
+            background-clip: text;    
+        }    
+        @keyframes heartbeat {        
+            0%, 100% { transform: translateZ(150px) scale(1); }        
+            50% { transform: translateZ(170px) scale(1.05); }    
+        }    
+        .love-subtitle {        
+            font-size: 2.5rem;        
+            color: #fff;        
+            margin-bottom: 3rem;        
+            transform: translateZ(100px);        
+            text-shadow: 0 10px 20px rgba(0,0,0,0.3);    
+        }    
+        .languages-container {        
+            max-width: 800px;        
+            max-height: 50vh;        
+            overflow-y: auto;        
+            padding: 2rem;        
+            background: rgba(255,255,255,0.1);        
+            border-radius: 20px;        
+            backdrop-filter: blur(10px);        
+            border: 1px solid rgba(255,255,255,0.2);        
+            transform: translateZ(50px);    
+        }    
+        .language-item {        
+            font-size: 1.2rem;        
+            margin: 0.5rem 0;        
+            opacity: 0;        
+            transform: translateY(20px);        
+            animation: fadeInUp 0.8s ease forwards;        
+            color: #fff;        
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);    
+        }    
+        .language-item:nth-child(odd) { color: #ff69b4; }    
+        .language-item:nth-child(even) { color: #ff1493; }    
+        @keyframes fadeInUp {        
+            to { opacity: 1; transform: translateY(0); }    
+        }    
+
+        /* Page 5 - I Love You Forever */
+        .page5 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transform: translateZ(-4000px) rotateY(-360deg);
+            transition: all 1.5s ease;
+            overflow: hidden;
+            background: linear-gradient(45deg, #ff6b9d, #c44569, #f72585, #7209b7);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            z-index: 500;
+        }
+        .page5.active {
+            opacity: 1;
+            transform: translateZ(0) rotateY(0deg);
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .love-container-final {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+        .love-text-final {
+            font-size: 4rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            text-align: center;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: slideInFinal 1s ease forwards;
+            margin: 20px;
+        }
+        @keyframes slideInFinal {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .kisses-container-final {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        .kiss-final {
+            position: absolute;
+            font-size: 2rem;
+            color: #ffeb3b;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            pointer-events: none;
+            animation: kissFloatFinal 2s ease-out forwards;
+        }
+        @keyframes kissFloatFinal {
+            0% { transform: translateY(100vh) scale(0); opacity: 1; }
+            50% { transform: translateY(50vh) scale(1.2); opacity: 1; }
+            100% { transform: translateY(-100px) scale(0.5); opacity: 0; }
+        }
+        .proceed-btn-final {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 20px 40px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(45deg, #ff6b9d, #f72585);
+            border: none;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            cursor: pointer;
+            opacity: 0;
+            transform: translateX(-50%) translateY(20px);
+            transition: all 0.5s ease;
+            z-index: 2000;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .proceed-btn-final:hover {
+            transform: translateX(-50%) translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+        .proceed-btn-final.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        .hearts-bg-final {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .heart-final {
+            position: absolute;
+            color: rgba(255,255,255,0.3);
+            font-size: 1.5rem;
+            animation: floatHeartFinal 6s linear infinite;
+        }
+        @keyframes floatHeartFinal {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        @media (max-width: 768px) {        
+            .title { font-size: 2.5rem; }        
+            .question { font-size: 1.5rem; }        
+            .love-title { font-size: 2.8rem; }        
+            .language-item { font-size: 1rem; }    
+            .love-text-final { font-size: 2.5rem; }
+            .proceed-btn-final { font-size: 1.2rem; padding: 15px 30px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="scene">
+        <!-- Page 1: Are you angry? -->
+        <div id="page1" class="page1">
+            <div class="title">💕 My Love 💕</div>
+            <div class="question">If you're angry at me, you cannot continue further...</div>
+            <div class="question" style="font-size: 1.8rem; margin-top: 1rem;">Are you angry on me?</div>
+            <div class="buttons">
+                <button class="btn btn-yes" id="btnYes">Yes 😢</button>
+                <button class="btn btn-no" id="btnNo">No ❤️</button>
+            </div>
+        </div>    
+
+        <!-- Page 2: MUUAAAAAHHHH -->    
+        <div id="page2" class="page2">        
+            <div class="thankyou-section">            
+                <div class="thankyou">Thank You for not being angry on me! 💖✨</div>            
+                <div class="muah-text">MUUAAAAAHHHH 😘<br>my lobby dubby pokemon! 🥰</div>        
+            </div>                
+            <div class="page2-buttons">            
+                <button class="btn btn-page2-no" id="btnPage2No">No more kisses? 😢</button>            
+                <button class="btn btn-page2-yes" id="btnPage2Yes">More kisses! 💋</button>        
+            </div>        
+            <div class="come-message">Let me show you something... come!</div>        
+            <button class="btn btn-go" id="btnGo" style="display: none;">Let's Go →</button>    
+        </div>    
+
+        <!-- Page 3: Movie Date -->    
+        <div id="page3" class="page3">        
+            <div class="movie-title">🍿 Will you come for a movie date with me? 🎬<br>💕 This weekend? 💕</div>        
+            <button class="btn btn-movie-yes" id="btnMovieYes">YES! 🥰🎉</button>    
+        </div>    
+
+        <!-- Page 4: 50 Languages -->    
+        <div id="page4" class="page4">        
+            <div class="love-title">I Love You 💖</div>        
+            <div class="love-subtitle">My Pokemen, Pookie<br><span style="font-size: 3rem;">PAKHI</span> 💕</div>        
+            <div id="languages-container" class="languages-container"></div>   
+            <button class="btn btn-go" id="btnGoPage5" style="opacity: 1; margin-top: 2rem; transform: translateZ(80px);">Final Surprise →</button> 
+        </div>
+
+        <!-- Page 5: I Love You Forever (Merged Code) -->
+        <div id="page5" class="page5">
+            <div class="hearts-bg-final" id="heartsBgFinal"></div>
+            <div class="love-container-final" id="loveContainerFinal">
+                <div class="love-text-final" id="loveTextFinal"></div>
+            </div>
+            <div class="kisses-container-final" id="kissesContainerFinal"></div>
+            <button class="proceed-btn-final" id="proceedBtnFinal">Please say "I love you more" to proceed ❤️</button>
+        </div>
+    </div>
+
+<script>    
+    // 50 Languages "I love you Pakhi"    
+    const loveTranslations = [        
+        { lang: "English", text: "I love you Pakhi 💕" },        
+        { lang: "Spanish", text: "Te amo Pakhi 💕" },        
+        { lang: "French", text: "Je t'aime Pakhi 💕" },        
+        { lang: "German", text: "Ich liebe dich Pakhi 💕" },        
+        { lang: "Italian", text: "Ti amo Pakhi 💕" },        
+        { lang: "Portuguese", text: "Eu te amo Pakhi 💕" },        
+        { lang: "Hindi", text: "मैं तुमसे प्यार करता हूँ पाखी 💕" },        
+        { lang: "Arabic", text: "أحبك پاخي 💕" },        
+        { lang: "Chinese", text: "我爱你 Pakhi 💕" },        
+        { lang: "Japanese", text: "パキを愛しています 💕" },        
+        { lang: "Korean", text: "파키 사랑해 💕" },        
+        { lang: "Russian", text: "Я люблю тебя Пакхи 💕" },        
+        { lang: "Dutch", text: "Ik hou van je Pakhi 💕" },        
+        { lang: "Swedish", text: "Jag älskar dig Pakhi 💕" },        
+        { lang: "Turkish", text: "Seni seviyorum Pakhi 💕" },        
+        { lang: "Polish", text: "Kocham cię Pakhi 💕" },        
+        { lang: "Greek", text: "Σ'αγαπώ Pakhi 💕" },        
+        { lang: "Hebrew", text: "אני אוהב אותך פקי 💕" },        
+        { lang: "Bengali", text: "আমি তোমাকে ভালোবাসি পাখি 💕" },        
+        { lang: "Punjabi", text: "ਮੈਂ ਤੁਹਾਨੂੰ ਪਿਆਰ ਕਰਦਾ ਹਾਂ ਪਾਖੀ 💕" },        
+        { lang: "Afrikaans", text: "Ek het jou lief Pakhi 💕" },        
+        { lang: "Albanian", text: "Të dua Pakhi 💕" },        
+        { lang: "Amharic", text: "እወድሻለሁ ፓኪ 💕" },        
+        { lang: "Armenian", text: "Ես սիրում եմ Pakhi 💕" },        
+        { lang: "Azerbaijani", text: "Mən səni sevirəm Pakhi 💕" },        
+        { lang: "Basque", text: "Maite zaitut Pakhi 💕" },        
+        { lang: "Belarusian", text: "Я кахаю цябе Pakhi 💕" },        
+        { lang: "Bosnian", text: "Volim te Pakhi 💕" },        
+        { lang: "Bulgarian", text: "Обичам те Pakhi 💕" },        
+        { lang: "Catalan", text: "T'estimo Pakhi 💕" },        
+        { lang: "Cebuano", text: "Gihigugma tika Pakhi 💕" },        
+        { lang: "Corsican", text: "Ti tengu amura Pakhi 💕" },        
+        { lang: "Croatian", text: "Volim te Pakhi 💕" },        
+        { lang: "Czech", text: "Miluji tě Pakhi 💕" },        
+        { lang: "Danish", text: "Jeg elsker dig Pakhi 💕" },        
+        { lang: "Esperanto", text: "Mi amas vin Pakhi 💕" },        
+        { lang: "Estonian", text: "Ma armastan sind Pakhi 💕" },        
+        { lang: "Filipino", text: "Mahal kita Pakhi 💕" },        
+        { lang: "Finnish", text: "Minä rakastan sinua Pakhi 💕" },        
+        { lang: "Frisian", text: "Ik hâld fan dy Pakhi 💕" },        
+        { lang: "Georgian", text: "მიყვარხარ Pakhi 💕" },        
+        { lang: "Gujarati", text: "હું તને પ્રેમ કરું છું Pakhi 💕" },        
+        { lang: "Haitian Creole", text: "Mwen renmen ou Pakhi 💕" },        
+        { lang: "Hausa", text: "Ina son ka Pakhi 💕" },        
+        { lang: "Hawaiian", text: "ALOHA wau iā ʻoe Pakhi 💕" },        
+        { lang: "Irish", text: "Is breá liom tú Pakhi 💕" },        
+        { lang: "Icelandic", text: "Ég elska þig Pakhi 💕" },        
+        { lang: "Indonesian", text: "Aku cinta kamu Pakhi 💕" },        
+        { lang: "Javanese", text: "Aku tresna sampeyan Pakhi 💕" },        
+        { lang: "Kannada", text: "ನಾನು ನಿನ್ನನ್ನು ಪ್ರೀತಿಸುತ್ತೇನೆ Pakhi 💕" }    
+    ];      
+
+    function createParticles() {        
+        for (let i = 0; i < 50; i++) {            
+            const particle = document.createElement('div');            
+            particle.className = 'particle';            
+            particle.style.left = Math.random() * 100 + '%';            
+            particle.style.width = particle.style.height = (Math.random() * 6 + 2) + 'px';            
+            particle.style.animationDelay = Math.random() * 6 + 's';            
+            particle.style.animationDuration = (Math.random() * 3 + 4) + 's';            
+            document.body.appendChild(particle);        
+        }    
+    }    
+
+    function createRosesHearts() {        
+        const page2 = document.getElementById('page2');        
+        for (let i = 0; i < 30; i++) {            
+            const rose = document.createElement('div');            
+            rose.className = 'rose';            
+            rose.innerHTML = '🌹';            
+            rose.style.left = Math.random() * 100 + '%';            
+            rose.style.animationDelay = Math.random() * 8 + 's';            
+            rose.style.animationDuration = (Math.random() * 4 + 6) + 's';            
+            page2.appendChild(rose);            
+            
+            const heart = document.createElement('div');            
+            heart.className = 'heart';            
+            heart.innerHTML = '💖';            
+            heart.style.left = Math.random() * 100 + '%';            
+            heart.style.animationDelay = Math.random() * 10 + 's';            
+            heart.style.animationDuration = (Math.random() * 5 + 7) + 's';            
+            page2.appendChild(heart);        
+        }    
+    }    
+
+    function populateLanguages() {        
+        const container = document.getElementById('languages-container');        
+        loveTranslations.forEach((translation, index) => {            
+            const item = document.createElement('div');            
+            item.className = 'language-item';            
+            item.innerHTML = `<strong>${translation.lang}:</strong> ${translation.text}`;            
+            item.style.animationDelay = `${(index * 0.05) + 0.5}s`;            
+            container.appendChild(item);        
+        });    
+    }    
+
+    // Page Transitions
+    function showPage2() {        
+        document.getElementById('page1').classList.add('hidden');        
+        setTimeout(() => {            
+            document.getElementById('page2').classList.add('active');            
+            createRosesHearts();        
+        }, 1000);    
+    }    
+    function showPage3() {        
+        document.getElementById('page2').classList.remove('active');        
+        setTimeout(() => {            
+            document.getElementById('page3').classList.add('active');        
+        }, 1000);    
+    }    
+    function showPage4() {        
+        document.getElementById('page3').classList.remove('active');        
+        setTimeout(() => {            
+            document.getElementById('page4').classList.add('active');            
+            populateLanguages();        
+        }, 1500);    
+    }
+    function showPage5() {
+        document.getElementById('page4').classList.remove('active');
+        setTimeout(() => {
+            document.getElementById('page5').classList.add('active');
+            initPage5(); // Start Page 5 sequence
+        }, 1500);
+    }
+
+    // Event listeners - Page 1    
+    document.getElementById('btnNo').addEventListener('click', showPage2);    
+    document.getElementById('btnYes').addEventListener('mouseover', function(e) {        
+        const rect = this.getBoundingClientRect();        
+        const x = e.clientX - rect.left;        
+        const y = e.clientY - rect.top;        
+        this.style.transform = `translate(${x * 3}px, ${y * 3}px) translateZ(100px) rotateY(360deg) scale(1.3)`;    
+    });    
+    document.getElementById('btnYes').addEventListener('click', function(e) {        
+        e.preventDefault();        
+        this.style.transform += ' translateX(200px)';        
+        setTimeout(() => {            
+            this.textContent = '😭 Nooo! Come back! 💔';            
+            this.style.transform = 'translateZ(50px) scale(0.8)';        
+        }, 300);    
+    });    
+
+    // Event listeners - Page 2    
+    document.getElementById('btnPage2No').addEventListener('mouseover', function(e) {        
+        const rect = this.getBoundingClientRect();        
+        const x = e.clientX - rect.left;        
+        const y = e.clientY - rect.top;        
+        this.style.transform = `translate(${x * 3}px, ${y * 3}px) translateZ(100px) rotateY(360deg) scale(1.3)`;    
+    });    
+    document.getElementById('btnPage2No').addEventListener('click', function(e) {        
+        e.preventDefault();        
+        this.style.transform += ' translateX(200px)';        
+        setTimeout(() => {            
+            this.textContent = '😭 Nooo! I need more kisses! 💋💔';            
+            this.style.transform = 'translateZ(50px) scale(0.8)';        
+        }, 300);    
+    });    
+    document.getElementById('btnPage2Yes').addEventListener('click', function() {        
+        const kissEffect = document.createElement('div');        
+        kissEffect.innerHTML = '💋💋💋';        
+        kissEffect.style.cssText = 'position:fixed;left:50%;top:50%;font-size:3rem;transform:translate(-50%,-50%);pointer-events:none;z-index:1000;animation:kissRain 2s ease-out forwards;';        
+        document.body.appendChild(kissEffect);        
+        setTimeout(() => kissEffect.remove(), 2000);    
+    });    
+    
+    document.getElementById('btnGo').addEventListener('click', showPage3);    
+    document.getElementById('btnMovieYes').addEventListener('click', showPage4);    
+    document.getElementById('btnGoPage5').addEventListener('click', showPage5);
+
+    window.addEventListener('load', createParticles);    
+    document.getElementById('page2').addEventListener('transitionend', function() {        
+        if (this.classList.contains('active')) {            
+            document.getElementById('btnGo').style.display = 'block';        
+        }    
+    });    
+
+    // Page 5 Interaction Setup (Merged Logic)
+    function initPage5() {
+        const loveMessages = [
+            "I LOVE YOU 💕", "JE T'AIME 💕", "TE QUIERO 💕", "ICH LIEBE DICH 💕", 
+            "TI AMO 💕", "WO AI NI 💕", "AISHITERU 💕", "SAYA SAYANG KAMU 💕", 
+            "Я ТЕБЯ ЛЮБЛЮ 💕", "I LOVE YOU FOREVER 💕"
+        ];
+        
+        const kissesContainer = document.getElementById('kissesContainerFinal');
+        const loveText = document.getElementById('loveTextFinal');
+        const proceedBtn = document.getElementById('proceedBtnFinal');
+        const heartsBg = document.getElementById('heartsBgFinal');
+        let currentMessageIndex = 0;
+
+        function createFloatingHeartsFinal() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart-final';
+                heart.innerHTML = '💖';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                heartsBg.appendChild(heart);
+                setTimeout(() => heart.remove(), 7000);
+            }, 300);
+        }
+
+        function createKissesFinal() {
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const kiss = document.createElement('div');
+                    kiss.className = 'kiss-final';
+                    kiss.innerHTML = ['💋', '💖', '💕', '😘', '🥰'][Math.floor(Math.random() * 5)];
+                    kiss.style.left = Math.random() * 100 + '%';
+                    kiss.style.animationDelay = Math.random() * 0.3 + 's';
+                    kissesContainer.appendChild(kiss);
+                    setTimeout(() => kiss.remove(), 2000);
+                }, i * 50);
+            }
+        }
+
+        function showNextMessageFinal() {
+            loveText.style.animation = 'none';
+            loveText.offsetHeight; 
+            loveText.style.animation = null;
+            loveText.textContent = loveMessages[currentMessageIndex];
+            currentMessageIndex = (currentMessageIndex + 1) % loveMessages.length;
+            
+            setTimeout(() => createKissesFinal(), 500);
+
+            if (currentMessageIndex === 0) {
+                setTimeout(() => proceedBtn.classList.add('show'), 7000);
+            }
+        }
+
+        proceedBtn.addEventListener('click', function(e) {
+            const btn = e.target;
+            btn.style.transform = 'translateX(-50%) scale(0.95)';
+            setTimeout(() => btn.style.transform = 'translateX(-50%) translateY(0)', 150);
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const kiss = document.createElement('div');
+                    kiss.className = 'kiss-final';
+                    kiss.innerHTML = '💋';
+                    kiss.style.left = Math.random() * 100 + '%';
+                    kiss.style.fontSize = Math.random() * 2 + 1.5 + 'rem';
+                    kissesContainer.appendChild(kiss);
+                    setTimeout(() => kiss.remove(), 3000);
+                }, i * 30);
+            }
+            
+            setTimeout(() => {
+                proceedBtn.classList.remove('show');
+                showNextMessageFinal();
+            }, 3000);
+        });
+
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+            
+            proceedBtn.addEventListener('click', () => recognition.start());
+            
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript.toLowerCase();
+                if (transcript.includes('love you') || transcript.includes('i love you')) {
+                    createKissesFinal();
+                    setTimeout(() => {
+                        proceedBtn.classList.remove('show');
+                        showNextMessageFinal();
+                    }, 2000);
+                }
+            };
+        }
+
+        createFloatingHeartsFinal();
+        showNextMessageFinal();
+
+        setInterval(() => {
+            if (!proceedBtn.classList.contains('show')) {
+                showNextMessageFinal();
+            }
+        }, 4000);
+
+        setInterval(() => {
+            const kisses = kissesContainer.querySelectorAll('.kiss-final');
+            kisses.forEach((kiss, index) => {
+                if (index > 50) kiss.remove();
+            });
+        }, 1000);
+    }
+
+    // Dynamic CSS for animations    
+    const style = document.createElement('style');    
+    style.textContent = `        
+        @keyframes bounce {0%,20%,50%,80%,100%{transform:translateZ(100px) translateY(0);}40%{transform:translateZ(100px) translateY(-20px);}60%{transform:translateZ(100px) translateY(-10px);}}        
+        @keyframes kissPulse {0%,100%{transform:translateZ(120px) scale(1) rotate(-2deg);text-shadow:0 8px 20px rgba(255,20,147,0.6);}50%{transform:translateZ(140px) scale(1.1) rotate(2deg);text-shadow:0 8px 20px rgba(255,20,147,0.8);}}        
+        @keyframes fadeIn {to{opacity:1;}}        
+        @keyframes popcornExplosion {0%{transform:translateY(0) scale(0) rotate(0deg);opacity:1;}100%{transform:translateY(-200px) scale(1.5) rotate(720deg);opacity:0;}}        
+        @keyframes kissRain {0%{transform:translate(-50%,-50%) scale(0);opacity:1;}50%{transform:translate(-50%,-50%) scale(1.5);opacity:1;}100%{transform:translate(-50%,-50%) scale(2);opacity:0;}}        
+        .rose{position:absolute;font-size:2rem;animation:roseFloat 8s infinite linear;pointer-events:none;}        
+        .heart{position:absolute;font-size:1.5rem;color:#ff69b4;animation:heartFloat 10s infinite linear;pointer-events:none;}        
+        @keyframes roseFloat{0%{transform:translateY(100vh) translateX(0) rotate(0deg);opacity:0;}10%{opacity:1;}90%{opacity:1;}100%{transform:translateY(-100px) translateX(100px) rotate(360deg);opacity:0;}}        
+        @keyframes heartFloat{0%{transform:translateY(100vh) translateX(0) rotate(0deg) scale(0);opacity:0;}10%{opacity:1;scale(1);}90%{opacity:1;}100%{transform:translateY(-100px) translateX(-100px) rotate(360deg) scale(0);opacity:0;}}        
+    `;    
+    document.head.appendChild(style);
+</script>
+</body>
+</html>
